@@ -1,0 +1,486 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Color Space Overview</title>
+
+        <style>
+            :root {
+                --dpi: 1;
+                font-size: calc(var(--dpi) * 16px);
+            }
+            :root * {
+                font-size: 1rem !important;
+            }
+            body {
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+            }
+            body::before {
+                content: '';
+                display: block;
+                filter: url(#roughpaper);
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: -1;
+            }
+            section {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            svg {
+                position: absolute;
+                top: 0;
+            }
+
+            table {
+                margin: 1rem 0;
+            }
+            th, td {
+                border: 2px solid #000;
+                min-width: 5rem;
+            }
+            td {
+                min-height: 5rem;
+                height: 5rem;
+                border-radius: 1rem;
+                text-align: center;
+                --unsupported: 'No \A Support';
+            }
+            td.colorLime:hover {
+                background-color: lime !important;
+            }
+
+            .gamuts h4 {
+                text-align: center;
+                flex-basis: 100%;
+            }
+            .gamuts ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .gamuts span::before {
+                content: 'no';
+                display: inline-block;
+            }
+            @media (color-gamut: srgb) {
+                #srgbGamut::before {
+                    content: 'yes';
+                }
+            }
+            @media (color-gamut: p3) {
+                #p3Gamut::before {
+                    content: 'yes';
+                }
+            }
+            @media (color-gamut: rec2020) {
+                #rec2020Gamut::before {
+                    content: 'yes';
+                }
+            }
+
+            #devicePixelRatio::before {
+                content: attr(data-dpi);
+            }
+
+            @media (-webkit-min-device-pixel-ratio: 1) {
+                :root{
+                    --dpi: 1;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.1) {
+                :root{
+                    --dpi: 1.1;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.2) {
+                :root{
+                    --dpi: 1.2;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.3) {
+                :root{
+                    --dpi: 1.3;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.4) {
+                :root{
+                    --dpi: 1.4;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.5) {
+                :root{
+                    --dpi: 1.5;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.6) {
+                :root{
+                    --dpi: 1.6;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.7) {
+                :root{
+                    --dpi: 1.7;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.8) {
+                :root{
+                    --dpi: 1.8;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 1.9) {
+                :root{
+                    --dpi: 1.9;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 2) {
+                :root{
+                    --dpi: 2;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 2.1) {
+                :root{
+                    --dpi: 2.1;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 2.2) {
+                :root{
+                    --dpi: 2.2;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 2.3) {
+                :root{
+                    --dpi: 2.3;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 2.4) {
+                :root{
+                    --dpi: 2.4;
+                }
+            }
+            @media (-webkit-min-device-pixel-ratio: 2.5) {
+                :root{
+                    --dpi: 2.5;
+                }
+            }
+
+            @supports not (color: red) {
+                tr.rowNames td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: #FF0000) {
+                tr.rowHex td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: rgb(255 0 0)) {
+                tr.rowRgb td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: hsl(0 100% 50%)) {
+                tr.rowHsl td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: hwb(0 0% 0%)) {
+                tr.rowHwb td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: lab(50% -90 0)) {
+                tr.rowLab td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: lch(50% 250 180)) {
+                tr.rowLch td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: oklab(50% -90 0)) {
+                tr.rowOklab td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: oklch(50% 530 180)) {
+                tr.rowOklch td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(display-p3 0 1 0)) {
+                tr.rowP3 td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(prophoto-rgb 0 1 0)) {
+                tr.rowProphoto td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(rec2020 0 1 0)) {
+                tr.rowRec2020 td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(srgb 0 1 0)) {
+                tr.rowSrgb td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(a98-rgb 0 1 0)) {
+                tr.rowA98 td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(xyz 0 1 0)) {
+                tr.rowXyz td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(xyz-d50 0 1 0)) {
+                tr.rowXyzd50 td::before {
+                    content: var(--unsupported);
+                }
+            }
+            @supports not (color: color(xyz-d65 0 1 0)) {
+                tr.rowXyzd65 td::before {
+                    content: var(--unsupported);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                Red
+                            </th>
+                            <th>
+                                Green
+                            </th>
+                            <th>
+                                Blue
+                            </th>
+                            <th>
+                                Black
+                            </th>
+                            <th>
+                                White
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="rowNames">
+                            <th>
+                                Names
+                            </th>
+                            <td style="background-color:red"></td>
+                            <td style="background-color:green" title="NOT &quot;green&quot; but &quot;lime&quot;" class="colorLime"></td>
+                            <td style="background-color:blue"></td>
+                            <td style="background-color:black"></td>
+                            <td style="background-color:white"></td>
+                        </tr>
+                        <tr class="rowHex">
+                            <th>
+                                Hex
+                            </th>
+                            <td style="background-color:#FF0000"></td>
+                            <td style="background-color:#00FF00"></td>
+                            <td style="background-color:#0000FF"></td>
+                            <td style="background-color:#000000"></td>
+                            <td style="background-color:#FFFFFF"></td>
+                        </tr>
+                        <tr class="rowRgb">
+                            <th>
+                                RGB
+                            </th>
+                            <td style="background-color:rgb(255 0 0)"></td>
+                            <td style="background-color:rgb(0 255 0)"></td>
+                            <td style="background-color:rgb(0 0 255)"></td>
+                            <td style="background-color:rgb(0 0 0)"></td>
+                            <td style="background-color:rgb(255 255 255)"></td>
+                        </tr>
+                        <tr class="rowHsl">
+                            <th>
+                                hsl
+                            </th>
+                            <td style="background-color:hsl(0 100% 50%)"></td>
+                            <td style="background-color:hsl(120 100% 50%)"></td>
+                            <td style="background-color:hsl(240 100% 50%)"></td>
+                            <td style="background-color:hsl(0 0% 0%)"></td>
+                            <td style="background-color:hsl(360 100% 100%)"></td>
+                        </tr>
+                        <tr class="rowHwb">
+                            <th>
+                                hwb
+                            </th>
+                            <td style="background-color:hwb(0 0% 0%)"></td>
+                            <td style="background-color:hwb(120 0% 0%)"></td>
+                            <td style="background-color:hwb(240 0% 0%)"></td>
+                            <td style="background-color:hwb(0 0% 100%)"></td>
+                            <td style="background-color:hwb(0 100% 0%)"></td>
+                        </tr>
+                        <tr class="rowLab">
+                            <th>
+                                lab
+                            </th>
+                            <td style="background-color:lab(50% -90 0)"></td>
+                        </tr>
+                        <tr class="rowLch">
+                            <th>
+                                lch
+                            </th>
+                            <td style="background-color:lch(50% 250 180)"></td>
+                        </tr>
+                        <tr class="rowOklab">
+                            <th>
+                                oklab
+                            </th>
+                            <td style="background-color:oklab(50% -90 0)"></td>
+                        </tr>
+                        <tr class="rowOklch">
+                            <th>
+                                oklch
+                            </th>
+                            <td style="background-color:oklch(50% 530 180)"></td>
+                        </tr>
+                        <tr class="rowP3">
+                            <th>
+                                p3
+                            </th>
+                            <td style="background-color:color(display-p3 0 1 0)"></td>
+                            <td style="background-color:color(display-p3 1 0 0)"></td>
+                            <td style="background-color:color(display-p3 0 0 1)"></td>
+                            <td style="background-color:color(display-p3 0 0 0)"></td>
+                            <td style="background-color:color(display-p3 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowProphoto">
+                            <th>
+                                prophoto-rgb
+                            </th>
+                            <td style="background-color:color(prophoto-rgb 0 1 0)"></td>
+                            <td style="background-color:color(prophoto-rgb 1 0 0)"></td>
+                            <td style="background-color:color(prophoto-rgb 0 0 1)"></td>
+                            <td style="background-color:color(prophoto-rgb 0 0 0)"></td>
+                            <td style="background-color:color(prophoto-rgb 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowRec2020">
+                            <th>
+                                rec2020
+                            </th>
+                            <td style="background-color:color(rec2020 0 1 0)"></td>
+                            <td style="background-color:color(rec2020 1 0 0)"></td>
+                            <td style="background-color:color(rec2020 0 0 1)"></td>
+                            <td style="background-color:color(rec2020 0 0 0)"></td>
+                            <td style="background-color:color(rec2020 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowSrgb">
+                            <th>
+                                sRGB
+                            </th>
+                            <td style="background-color:color(srgb 0 1 0)"></td>
+                            <td style="background-color:color(srgb 1 0 0)"></td>
+                            <td style="background-color:color(srgb 0 0 1)"></td>
+                            <td style="background-color:color(srgb 0 0 0)"></td>
+                            <td style="background-color:color(srgb 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowA98">
+                            <th>
+                                a98-rgb
+                            </th>
+                            <td style="background-color:color(a98-rgb 0 1 0)"></td>
+                            <td style="background-color:color(a98-rgb 1 0 0)"></td>
+                            <td style="background-color:color(a98-rgb 0 0 1)"></td>
+                            <td style="background-color:color(a98-rgb 0 0 0)"></td>
+                            <td style="background-color:color(a98-rgb 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowXyz">
+                            <th>
+                                xyz
+                            </th>
+                            <td style="background-color:color(xyz 0 1 0)"></td>
+                            <td style="background-color:color(xyz 1 0 0)"></td>
+                            <td style="background-color:color(xyz 0 0 1)"></td>
+                            <td style="background-color:color(xyz 0 0 0)"></td>
+                            <td style="background-color:color(xyz 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowXyzd50">
+                            <th>
+                                xyz-d50
+                            </th>
+                            <td style="background-color:color(xyz-d50 0 1 0)"></td>
+                            <td style="background-color:color(xyz-d50 1 0 0)"></td>
+                            <td style="background-color:color(xyz-d50 0 0 1)"></td>
+                            <td style="background-color:color(xyz-d50 0 0 0)"></td>
+                            <td style="background-color:color(xyz-d50 1 1 1)"></td>
+                        </tr>
+                        <tr class="rowXyzd65">
+                            <th>
+                                xyz-d65
+                            </th>
+                            <td style="background-color:color(xyz-d65 0 1 0)"></td>
+                            <td style="background-color:color(xyz-d65 1 0 0)"></td>
+                            <td style="background-color:color(xyz-d65 0 0 1)"></td>
+                            <td style="background-color:color(xyz-d65 0 0 0)"></td>
+                            <td style="background-color:color(xyz-d65 1 1 1)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <hr>
+
+            <section class="gamuts">
+                <h4>
+                    Color gamut support on device:
+                </h4>
+                <ul>
+                    <li>
+                        p3 : <span id="p3Gamut"></span>
+                    </li>
+                    <li>
+                        srgb : <span id="srgbGamut"></span>
+                    </li>
+                    <li>
+                        rec2020 : <span id="rec2020Gamut"></span>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h4>
+                    Device pixel ratio: <span id="devicePixelRatio" data-dpi="1"></span>
+                </h4>
+            </section>
+        </main>
+        <svg>
+            <filter id="roughpaper">
+                <feTurbulence type="fractalNoise" baseFrequency="0.02" result="noise" numOctaves="5" />
+                <feDiffuseLighting in="noise" lighting-color="#FFF" surfaceScale="2">
+                    <feDistantLight azimuth="9" elevation="60" />
+                </feDiffuseLighting>
+            </filter>
+        </svg>
+        <script>
+            const dpiElm = document.querySelector("#devicePixelRatio");
+            dpiElm.setAttribute('data-dpi', getComputedStyle(document.documentElement).getPropertyValue("--dpi") );
+        </script>
+    </body>
+</html>
